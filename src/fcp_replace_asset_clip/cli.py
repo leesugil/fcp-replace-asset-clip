@@ -13,7 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description="Replaces asset-clip source media without changing the offset, start, and duration of the original asset-clip data.")
     parser.add_argument("fcpxml_filepath", help="Absolute filepath to fcpxml (required)")
     # output
-    parser.add_argument("--affix", type=str, default='timescale60_fixed_', help="affix to recognize the replacing media filenames and also used in modifying the output filename")
+    parser.add_argument("--affix", type=str, default='timescale900_fixed_', help="affix to recognize the replacing media filenames and also used in modifying the output filename")
     # debug
     parser.add_argument("--debug", action='store_true', help="(experimental) display debug messages.")
 

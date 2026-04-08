@@ -45,5 +45,7 @@ def replace_with_target(root, target, affix, debug=False):
                 c.set('ref', t.get('id'))
                 c.set('name', t.get('name'))
                 c.set('format', t.get('format'))
+                for conform in c.findall('conform-rate'):
+                    c.remove(conform)
 
 
