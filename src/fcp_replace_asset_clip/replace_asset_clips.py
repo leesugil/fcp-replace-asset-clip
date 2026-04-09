@@ -48,4 +48,32 @@ def replace_with_target(root, target, affix, debug=False):
                 for conform in c.findall('conform-rate'):
                     c.remove(conform)
 
+    # some are not just clean asset-clips. this is a disaster.
+    asset_clips = root.findall('.//asset-clip')
+    resources = root.find('resources')
+    for r in resources:
+        if r.tag == 'media':
+            for sequence in r.findall('sequence'):
+                for spine in sequence.findall('spine'):
+                    for c in spine:
+                        for t in target:
+                            if c.tag == 'clip' and (c.get('name') == t.get('target_name')):
+                                if debug:
+                                    print(f"replace_with_target: found {c.get('name')} at {c.get('offset')} starting at {c.get('start')}")
+                                    print(f"{c.get('name')} -> {t.get('name')}")
+                                    print(f"{c.get('format')} -> {t.get('format')}")
+                                c.set('name', t.get('name'))
+                                c.set('format', t.get('format'))
+                                for conform in c.findall('conform-rate'):
+                                    c.remove(conform)
+                                for video in c.findall('video'):
+                                    if debug:
+                                        # check if this is the right substitution
+                                        print(f"{video.get('ref')} -> {t.get('id')}")
+                                    video.set('ref', t.get('id'))
+                                    for audio in video.findall('audio'):
+                                        if debug:
+                                            # check if this is the right substitution
+                                            print(f"{audio.get('ref')} -> {t.get('id')}")
+                                        audio.set('ref', t.get('id'))
 
